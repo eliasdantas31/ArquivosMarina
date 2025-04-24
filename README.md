@@ -1,11 +1,19 @@
 
-# 📁 Projeto Marina – Automação com Gulp
+# 📁 Projeto Marina
 
 Este projeto usa Gulp para automatizar tarefas comuns de desenvolvimento front-end como compilação de SCSS, minificação e ofuscação de JavaScript, e compressão de imagens.
+Utiliza também de jQuery e Bootstrap para levar o front end do projeto ao máximo de sua performasse.
 
 ---
 
-## ⚙️ Tecnologias e Plugins Utilizados
+## ⚙️ Tecnologias css/js e Plugins Utilizados
+
+- **[Bootstrap](https://getbootstrap.com/)** – biblioteca `css`
+- **[jQuery](https://jquery.com/)** – biblioteca `JavaScript`
+- **jQuery Validation** – Facilita a validação simples de formulários do lado do cliente
+- **jQuery Mask Plugin** – Aplica marcaras a campos input
+
+## ⚙️ Tecnologias gulp/scss e Plugins Utilizados
 
 - **[Gulp](https://gulpjs.com/)** – Orquestrador de tarefas
 - **gulp-sass** – Compila arquivos `.scss` para `.css`
@@ -56,13 +64,17 @@ O Gulp vai:
 ```
 Projeto-Marina/
 ├── build/
-│   ├── styles/
-│   ├── scripts/
-│   └── imagens/
+│   ├── imagens/.{png,jpg,jpeg,gif,svg}
+│   ├── lib/bootstrap.budle.min.js, bootstrap.min.css
+│   ├── scripts/main.js, jquery.mask.min.js, jquery.validate.min.js, messages_pt_BR.min.js
+│   ├── styles/main.css
+│   │   └── maps/main.css.map
+│   └──index.html
 ├── source/
-│   ├── styles/
-│   ├── scripts/
-│   └── imagens/
+│   ├── imagens/.{png,jpg,jpeg,gif,svg}
+│   ├── scripts/main.js
+│   └── styles/main.scss
+│       └── config/reset.scss, variaveis.scss
 ├── gulpfile.js
 └── package.json
 ```
@@ -72,11 +84,7 @@ Projeto-Marina/
 ## 💡 Dicas
 
 - Sempre reinicie o Gulp após alterar o `gulpfile.js`.
-- Quer mais performance? Podemos incluir:
-  - Cache para imagens e scripts
-  - Live reload com BrowserSync
-  - Suporte a WebP/AVIF
-  - Separação de ambiente de produção/desenvolvimento
+- Evitar mexer em `gulpfiles.js`, `package-lock.json`, `package.json`. 
 
 ---
 
