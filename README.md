@@ -22,7 +22,7 @@ Este projeto usa Gulp para automatizar tarefas comuns de desenvolvimento front-e
 1. Clone o projeto:
 
 ```bash
-git clone ...
+git clone https://github.com/eliasdantas31/ArquivosMarina.git
 cd projeto-marina
 ```
 
