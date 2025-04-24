@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marina Águas Do Barreiro</title>
+  <!-- CSS básico -->
+  <link rel="stylesheet" href="./styles/main.css" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="./lib/bootstrap.min.css" />
+  <!-- AOS animate -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+</head>
+<body>
+  <section>
+    <div id="menu" class="container p-0" data-aos="zoom-in" data-aos-duration="1500">
+      <div class="row mb-4 menu-img">
+        <img src="./imagens/Logo Marina.jpg" alt="Logo da Marina" />
+      </div>
+      <div class="row menu-btn">
+        <button onclick="formWindow()">Se Registrar</button>
+      </div>
+    </div>
+
+    <form id="form" class="container p-0 ">
+      <header class="mb-4"></header>
+      <div class="pessoal">
+        <h1>DADOS PARA RESERVA</h1>
+        <div>
+          <label for="name">*Nome:</label>
+          <input type="text" id="name" required />
+        </div>
+        <div>
+          <label for="email">*Email:</label>
+          <input type="email" id="email" required />
+        </div>
+        <div>
+          <label for="tel">*Telefone:</label>
+          <input type="text" id="tel" required />
+        </div>
+        <div>
+          <label for="endereco">*Endereço:</label>
+          <input type="text" id="endereco" required />
+        </div>
+        <div class="row city">
+          <div class="p-0">
+            <label for="CEP">*CEP:</label>
+            <input type="text" id="CEP" required />
+          </div>
+          <div class="p-0">
+            <label for="city">*Cidade:</label>
+            <input type="text" id="city" required />
+          </div>
+        </div>
+      </div>
+      <div class="barco">
+        <h1>DADOS DA EMBARCAÇÃO</h1>
+        <div>
+          <label for="name2">*Nome:</label>
+          <input type="text" id="name2" required />
+        </div>
+        <div class="boat-type">
+          <p>*Tipo:</p>
+          <div>
+            <div>
+              <label for="lancha">Lancha</label>
+              <input type="radio" id="lancha" name="type"/>
+            </div>
+            <div>
+              <label for="JET">JET</label>
+              <input type="radio" id="JET" name="type"/>
+            </div>
+          </div>
+        </div>
+        <div>
+          <label for="tamanho">*Tamanho (lancha) de 14 a 50</label>
+          <input type="number" id="tamanho" min="14" max="50" required />
+        </div>
+        <div class="option">
+          <p>*Sua embarcação está guardada em alguma marina atual?</p>
+          <div>
+            <div>
+              <label for="S">Sim</label>
+              <input type="radio" id="S" name="guarda-marina" />
+            </div>
+            <div>
+              <label for="N">Não</label>
+              <input type="radio" id="N" name="guarda-marina" />
+            </div>
+          </div>
+        </div>
+        <div class="option-questions">
+            <div>
+              <label for="Onde">Onde:</label>
+              <input type="text" id="Onde">
+            </div>
+            <div>
+              <label for="city2">Cidade:</label>
+              <input type="text" id="city2">
+            </div>
+        </div>
+      </div>
+
+      <div class="form-btn m-2">
+        <button id="zap_btn" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- Scripts base -->
+  <script src="./scripts/main.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="./lib/bootstrap.bundle.min.js"></script>
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <!-- Jquery js -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script>
+    AOS.init();
+  
+    $(document).ready(function () {
+      $('#zap_btn').on('click', function (e) {
+        e.preventDefault(); // Impede o reload da página
+  
+        // Dados pessoais
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var tel = $('#tel').val();
+        var endereco = $('#endereco').val();
+        var CEP = $('#CEP').val();
+        var city = $('#city').val();
+  
+        // Dados embarcação
+        var name2 = $('#name2').val();
+        var tipo = $('#JET').is(':checked') ? 'JET' : 'Lancha';
+        var tamanho = $('#tamanho').val();
+        var guarda_marina = $('input[name="guarda-marina"]:checked').attr('id'); // Pega o ID do selecionado
+        var onde = $('#Onde').val();
+        var city2 = $('#city2').val();
+  
+        // Mensagem base
+        let texto = `*Novo Registro*
+Olá, aqui estão minhas informações de cadastro:
+
+*Informações pessoais:*
+Nome: ${name}
+Email: ${email}
+Telefone: ${tel}
+Endereço: ${endereco}
+CEP: ${CEP}
+Cidade: ${city}
+
+*Informações da embarcação:*
+Nome da embarcação: ${name2}
+Tipo: ${tipo}
+Tamanho: ${tamanho}
+Guarda em marina: ${guarda_marina === 'S' ? 'Sim' : 'Não'}`;
+  
+        // Adiciona dados extras se for "Sim"
+        if (guarda_marina === 'S') {
+          texto += `
+Local atual: ${onde}
+Cidade da marina: ${city2}`;
+        }
+  
+        // Codifica e envia
+        var link = 'https://wa.me/5519993254004?text=' + encodeURIComponent(texto);
+        window.open(link, '_blank');
+      });
+    });
+  </script>
+</body>
+</html>
