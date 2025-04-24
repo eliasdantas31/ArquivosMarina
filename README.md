@@ -11,7 +11,7 @@ Utiliza também de jQuery e Bootstrap para levar o front end do projeto ao máxi
 - **[Bootstrap](https://getbootstrap.com/)** – biblioteca `css`
 - **[jQuery](https://jquery.com/)** – biblioteca `JavaScript`
 - **jQuery Validation** – Facilita a validação simples de formulários do lado do cliente
-- **jQuery Mask Plugin** – Aplica marcaras a campos input
+- **jQuery Mask Plugin** – Aplica mascaras a campos input
 
 ## ⚙️ Tecnologias gulp/scss e Plugins Utilizados
 
