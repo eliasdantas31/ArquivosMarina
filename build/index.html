@@ -14,7 +14,7 @@
 <body>
   <section>
     <div id="menu" class="container p-0" data-aos="zoom-in" data-aos-duration="1500">
-      <div class="row mb-4 menu-img">
+      <div class="row my-4 menu-img">
         <img src="./imagens/Logo Marina.jpg" alt="Logo da Marina" />
       </div>
       <div class="row menu-btn">
@@ -28,28 +28,28 @@
         <h1>DADOS PARA RESERVA</h1>
         <div>
           <label for="name">*Nome:</label>
-          <input type="text" id="name" required />
+          <input type="text" id="name" name="name" />
         </div>
         <div>
           <label for="email">*Email:</label>
-          <input type="email" id="email" required />
+          <input type="email" id="email" name="email" />
         </div>
         <div>
           <label for="tel">*Telefone:</label>
-          <input type="text" id="tel" required />
+          <input type="text" id="tel" name="tel" />
         </div>
         <div>
           <label for="endereco">*Endereço:</label>
-          <input type="text" id="endereco" required />
+          <input type="text" id="endereco" name="endereco" />
         </div>
         <div class="row city">
           <div class="p-0">
             <label for="CEP">*CEP:</label>
-            <input type="text" id="CEP" required />
+            <input type="text" id="CEP" name="CEP" />
           </div>
           <div class="p-0">
             <label for="city">*Cidade:</label>
-            <input type="text" id="city" required />
+            <input type="text" id="city" name="city" />
           </div>
         </div>
       </div>
@@ -57,7 +57,7 @@
         <h1>DADOS DA EMBARCAÇÃO</h1>
         <div>
           <label for="name2">*Nome:</label>
-          <input type="text" id="name2" required />
+          <input type="text" id="name2" name="name2" />
         </div>
         <div class="boat-type">
           <p>*Tipo:</p>
@@ -73,36 +73,36 @@
           </div>
         </div>
         <div>
-          <label for="tamanho">*Tamanho (lancha) de 14 a 50</label>
-          <input type="number" id="tamanho" min="14" max="50" required />
+          <label for="size">*Tamanho (lancha) de 14 a 50</label>
+          <input type="number" id="size" name="size" min="14" max="50"/>
         </div>
         <div class="option">
-          <p>*Sua embarcação está guardada em alguma marina atual?</p>
+          <p>*Sua embarcação está guardada em alguma marina?(Deixar em branco será considerado como não.)</p>
           <div>
             <div>
               <label for="S">Sim</label>
-              <input type="radio" id="S" name="guarda-marina" />
+              <input type="radio" id="S" name="guarda_marina" />
             </div>
             <div>
               <label for="N">Não</label>
-              <input type="radio" id="N" name="guarda-marina" />
+              <input type="radio" id="N" name="guarda_marina" />
             </div>
           </div>
         </div>
         <div class="option-questions">
             <div>
-              <label for="Onde">Onde:</label>
-              <input type="text" id="Onde">
+              <label for="where">Onde:</label>
+              <input type="text" id="where" name="where">
             </div>
             <div>
               <label for="city2">Cidade:</label>
-              <input type="text" id="city2">
+              <input type="text" id="city2" name="city2">
             </div>
         </div>
       </div>
 
-      <div class="form-btn m-2">
-        <button id="zap_btn" class="btn btn-primary">Salvar</button>
+      <div class="form-btn m-3">
+        <button id="zap_btn" class="btn btn-primary" disabled>Salvar</button>
       </div>
     </form>
   </section>
@@ -115,31 +115,108 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <!-- Jquery js -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="./scripts/jquery.mask.min.js"></script>
+  <script src="./scripts/jquery.validate.min.js"></script>
+  <script src="./scripts/messages_pt_BR.min.js"></script>
   <script>
     AOS.init();
   
     $(document).ready(function () {
-      $('#zap_btn').on('click', function (e) {
-        e.preventDefault(); // Impede o reload da página
-  
+      $('#tel').mask('(00) 00000-0000', {
+        placeholder: '(00) 00000-0000'
+      });
+      $('#CEP').mask('00000-000', {
+        placeholder: '00000-000'
+      });
+
+      const $form = $('#form');
+      const $button = $('#zap_btn');
+
+      $form.validate({
+        rules: {
+          name: { 
+            required: true 
+          },
+          email: { 
+            required: true, 
+            email: true 
+          },
+          tel: { 
+            required: true 
+          },
+          endereco: { 
+            required: true 
+          },
+          CEP: { 
+            required: true 
+          },
+          city: { 
+            required: true 
+          },
+          name2: { 
+            required: true 
+          },
+          type: {
+            required: true
+          },
+          size: { 
+            required: true 
+          },
+          guarda_marina: {
+            required: function(){
+              return $('#S').is(':checked');
+            }
+          },
+          where: {
+              required: function(){
+                  return $('#S').is(':checked');
+              }
+          },
+          city2: {
+            required: function(){
+              return $('#S').is(':checked');
+            }
+          }
+        },
+        messages: {
+          type: 'Selecione o tipo da sua embarcação'
+        }
+      });
+
+      // Checar se o form está válido e habilitar/desabilitar botão
+      function checarValidade() {
+        $button.prop('disabled', !$form.valid());
+      }
+
+      // Desabilita no início
+      $button.prop('disabled', true);
+
+      // Verifica em tempo real
+      $form.find('input').on('input change blur', checarValidade);
+
+      // Envio para WhatsApp
+      $button.on('click', function (e) {
+        e.preventDefault();
+      
         // Dados pessoais
-        var name = $('#name').val();
-        var email = $('#email').val();
-        var tel = $('#tel').val();
-        var endereco = $('#endereco').val();
-        var CEP = $('#CEP').val();
-        var city = $('#city').val();
-  
+        const name = $('#name').val();
+        const email = $('#email').val();
+        const tel = $('#tel').val();
+        const endereco = $('#endereco').val();
+        const CEP = $('#CEP').val();
+        const city = $('#city').val();
+      
         // Dados embarcação
-        var name2 = $('#name2').val();
-        var tipo = $('#JET').is(':checked') ? 'JET' : 'Lancha';
-        var tamanho = $('#tamanho').val();
-        var guarda_marina = $('input[name="guarda-marina"]:checked').attr('id'); // Pega o ID do selecionado
-        var onde = $('#Onde').val();
-        var city2 = $('#city2').val();
-  
-        // Mensagem base
-        let texto = `*Novo Registro*
+        const name2 = $('#name2').val();
+        const tipo = $('#JET').is(':checked') ? 'JET' : 'Lancha';
+        const size = $('#size').val();
+        const guarda_marina = $('input[name="guarda-marina"]:checked').attr('id');
+        const where = $('#where').val();
+        const city2 = $('#city2').val();
+      
+        // Montagem da mensagem
+        let texto = `
+*Novo Registro*
 Olá, aqui estão minhas informações de cadastro:
 
 *Informações pessoais:*
@@ -153,21 +230,19 @@ Cidade: ${city}
 *Informações da embarcação:*
 Nome da embarcação: ${name2}
 Tipo: ${tipo}
-Tamanho: ${tamanho}
-Guarda em marina: ${guarda_marina === 'S' ? 'Sim' : 'Não'}`;
-  
-        // Adiciona dados extras se for "Sim"
-        if (guarda_marina === 'S') {
-          texto += `
-Local atual: ${onde}
-Cidade da marina: ${city2}`;
-        }
-  
-        // Codifica e envia
-        var link = 'https://wa.me/5519993254004?text=' + encodeURIComponent(texto);
-        window.open(link, '_blank');
-      });
-    });
+Tamanho: ${size}
+Guardada em marina: ${guarda_marina === 'S' ? 'Sim' : 'Não'}`;
+
+  if (guarda_marina === 'S') {
+    texto += `
+Local atual: ${where}
+Cidade atual: ${city2}`;
+  }
+
+  const link = 'https://wa.me/5519993254004?text=' + encodeURIComponent(texto);
+  window.open(link, '_blank');
+});
+});
   </script>
 </body>
 </html>
