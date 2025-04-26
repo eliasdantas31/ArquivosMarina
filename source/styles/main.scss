@@ -52,8 +52,8 @@ section{
             @include display();
             width: 100%;
             img{
-                height: 500px;
-                width: 500px;
+                height: 50vh;
+                width: auto;
             }
         }
         div:nth-of-type(2){
@@ -191,6 +191,7 @@ section{
             @include display();
         
             button{
+                height: auto;
                 width: 25%;
             }
         }
@@ -208,10 +209,6 @@ section{
   
         div:nth-of-type(1) {
             margin: 10px !important;
-          img {
-            width: 90%;
-            height: auto !important;
-          }
         }
   
         div:nth-of-type(2) {
@@ -227,68 +224,78 @@ section{
         width: 100%;
         font-size: 1rem;
         padding: 15px;
-  
+
         div.pessoal,
         div.barco {
-          gap: 10px;
-  
-          div {
-            input {
-              width: 90%;
-            }
-          }
-  
-          div.city {
-            flex-direction: column;
-  
-            div {
-              width: 100%;
-  
-              input {
-                width: 90%;
-              }
-            }
-          }
+            gap: 10px;
 
-          div.boat-type{
-            div{
-                div{
+            div {
+              input {
+                    width: 90%;
+                }
+            }
+          
+            div.city {
+                flex-direction: column;
+  
+                div {
+                    width: 100%;
+                
                     input {
-                        margin: 0 0 0 10px !important;
+                        width: 90%;
                     }
                 }
             }
-          }
-  
-          div.boat-type > div,
-          div.option > div {
-            gap: 10px;
-  
-            div {
-              display: flex;
-              flex-direction: row;
-              align-items: center;
-              justify-content: center;
-  
-              input {
-                margin: 0 5px 0 0;
-              }
+
+            div.boat-type{
+                div{
+                    div{
+                        input {
+                            margin: 0 0 0 10px !important;
+                        }
+                    }
+                }
             }
-          }
+          
+            div.boat-type > div,
+            div.option > div {
+                gap: 10px;
+            
+                div {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                
+                    input {
+                        margin: 0 5px 0 0;
+                    }
+                }
+            }
         }
 
-        div.option{
-            text-align: center;
-        }
+            div.option{
+                text-align: center;
+            }
   
-        div.form-btn {
-          button {
-            width: 50%;
-            padding: 10px;
-            font-size: 1rem;
-          }
+            div.form-btn {
+                margin: 0 !important;
+                
+                button {
+                    width: 50%;
+                    padding: 10px;
+                    font-size: 1rem;
+                    margin-bottom: 10px !important;
+                }
+            }
         }
-      }
     }
-  }
-  
+}
+
+@media screen and (max-width: 380px) {
+    section{
+        form{
+            margin-top: 390px !important;
+        }
+    }
+}
